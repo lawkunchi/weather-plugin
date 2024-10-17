@@ -1,0 +1,16 @@
+.weather-info {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.weather-info h3 {
+    margin-top: 0;
+}
+
+.weather-info p {
+    margin: 5px 0;
+}
