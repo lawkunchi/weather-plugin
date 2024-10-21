@@ -20,7 +20,7 @@ class WeatherSettingsPage {
     }
 
     public function register_settings() {
-        register_setting('lawrence_weather_plugin_options', 'lawrence_weather_api_key');
+        register_setting('lawrence_weather_plugin_options', 'lawrence_weather_api_key', 'sanitize_text_field');
         add_settings_section('lawrence_weather_api_section', 'API Settings', null, 'lawrence-weather-plugin');
         add_settings_field(
             'lawrence_weather_api_key',
@@ -32,6 +32,9 @@ class WeatherSettingsPage {
     }
 
     public function render_settings_page() {
+        if (isset($_GET['settings-updated'])) {
+            add_settings_error('lawrence_weather_plugin_options', 'settings_updated', 'Settings saved.', 'updated');
+        }
         ?>
         <div class="wrap">
             <h1>Lawrence Weather Plugin Settings</h1>
@@ -42,6 +45,9 @@ class WeatherSettingsPage {
                 submit_button();
                 ?>
             </form>
+            <?php
+            settings_errors(); 
+            ?>
         </div>
         <?php
     }

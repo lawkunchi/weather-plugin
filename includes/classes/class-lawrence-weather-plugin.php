@@ -12,7 +12,8 @@ class LawrenceWeatherPlugin {
 
     public function display_weather_shortcode($atts) {
         $atts = shortcode_atts(['city' => 'London'], $atts, 'lawrence_weather');
-        return $this->render_weather_output($atts['city']);
+        $city = sanitize_text_field($atts['city']);
+        return $this->render_weather_output($city);
     }
 
     public function display_weather_with_dropdown_shortcode() {
@@ -38,8 +39,8 @@ class LawrenceWeatherPlugin {
     private function render_weather_output($city) {
         $weather_data = $this->weather_service->get_weather_data($city);
 
-        if (!$weather_data) {
-            return '<p>Unable to retrieve weather data at this time.</p>';
+        if (!is_array($weather_data) || !isset($weather_data['main']['temp'])) {
+            return '<p>' . esc_html__('Unable to retrieve weather data at this time.', 'lawrence-weather') . '</p>';
         }
 
         $output = '<div class="weather-info">';
